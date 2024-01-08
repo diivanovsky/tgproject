@@ -2,9 +2,8 @@ from aiogram.types import (InlineKeyboardButton, InlineKeyboardMarkup, KeyboardB
                            ReplyKeyboardRemove)
 menu = [
     [InlineKeyboardButton(text="Помоги найти лекарство", callback_data="find_chem")],
-
     [InlineKeyboardButton(text="Где ближайшие аптеки?", callback_data="nearest_chem")],
-    [InlineKeyboardButton(text="От чего это лекарство", callback_data="pills_for")]
+    [InlineKeyboardButton(text="От чего это лекарство?", callback_data="pills_for")]
 ]
 menu = InlineKeyboardMarkup(inline_keyboard=menu)
 
