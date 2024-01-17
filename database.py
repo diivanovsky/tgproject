@@ -19,3 +19,8 @@ db = os.getenv('DB_ENGINE')
 engine = create_engine(db)
 Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
+session = Session()
+
+
+
+
