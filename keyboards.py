@@ -7,5 +7,17 @@ menu = [
 ]
 menu = InlineKeyboardMarkup(inline_keyboard=menu)
 
-exit_kb = ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="◀️ Выйти в меню")]], resize_keyboard=True)
-iexit_kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="◀️ Выйти в меню", callback_data="menu")]])
+district = [
+    [InlineKeyboardButton(text="Заводской", callback_data="zavod"),
+     InlineKeyboardButton(text="Партизанский", callback_data="partiz")],
+    [InlineKeyboardButton(text="Советский", callback_data="sovet"),
+     InlineKeyboardButton(text="Центральный", callback_data="centr")],
+    [InlineKeyboardButton(text="Московский", callback_data="mosk"),
+     InlineKeyboardButton(text="Ленинский", callback_data="lenin")],
+    [InlineKeyboardButton(text="Первомайский", callback_data="perv"),
+     InlineKeyboardButton(text="Фрунзенский", callback_data="frunz")],
+    [InlineKeyboardButton(text="Октябрьский", callback_data="okt"),
+     InlineKeyboardButton(text="НАЗАД", callback_data="menu")]
+]
+district = InlineKeyboardMarkup(inline_keyboard=district)
+
