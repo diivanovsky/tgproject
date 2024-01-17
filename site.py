@@ -26,6 +26,7 @@ def search_and_parse(query):
                     print(text)
                     file.write(text + '\n')
 
+
 query = 'темпалгин'
 city = 'минск'
 output_file = 'streets.txt'
