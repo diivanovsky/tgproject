@@ -8,7 +8,7 @@ from states import Gen
 import keyboards
 import text
 from database import session, District
-from sites import search_and_parse
+from sites import search_and_parse, parse_pills
 router = Router()
 
 
@@ -66,4 +66,17 @@ async def process_district(message: Message, state: FSMContext):
     await message.answer(text.menu, reply_markup=keyboards.menu)
 
 
+@router.callback_query(F.data == "pills_for")
+async def input_text_prompt(clbck: CallbackQuery, state: FSMContext):
+    await state.set_state(Gen.pills_for)
+    await clbck.message.answer(text.pills)
 
+
+@router.message(Gen.pills_for)
+@flags.chat_action("typing")
+async def process_pills(message: Message, state: FSMContext):
+    pills_name = message.text
+    await message.answer('Ща, 5 сек, я поищу что-то для тебя')
+    result = parse_pills(pills_name)
+    await message.answer(f' {pills_name} примерно от следующего: \n \n {result}')
+    await message.answer(text.menu, reply_markup=keyboards.menu)
