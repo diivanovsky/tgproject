@@ -12,27 +12,21 @@ from sites import search_and_parse, parse_pills
 router = Router()
 
 
-def get_district_id(name):
-    similar_district = session.query(District).filter(District.district_name.ilike(f'%{name}%')).first()
-
-    if similar_district:
-        district_id = similar_district.district_id
-        return district_id
-    else:
-        return "Увы и ах"
-
-
 @router.message(Command("start"))
+@flags.chat_action("typing")
 async def start_handler(msg: Message):
-    await msg.answer(text.greet.format(name=msg.from_user.full_name), reply_markup=keyboards.menu)
+    await msg.answer(f"Привет, {msg.from_user.full_name},я помогу тебе найти лекарства и ближайшие аптеки, "
+                     f"где они есть, но это не точно. Сходи лучше к врачу, дубина", reply_markup=keyboards.menu)
 
 
 @router.callback_query(F.data == "menu")
+@flags.chat_action("typing")
 async def menu(clbck: CallbackQuery):
     await clbck.message.answer(text.menu, reply_markup=keyboards.menu)
 
 
 @router.callback_query(F.data == "find_chem")
+@flags.chat_action("typing")
 async def input_text_prompt(clbck: CallbackQuery, state: FSMContext):
     await state.set_state(Gen.find_distr)
     await clbck.message.answer(text.district)
@@ -56,7 +50,7 @@ async def process_district(message: Message, state: FSMContext):
 
 @router.message(Gen.find_chem)
 @flags.chat_action("typing")
-async def process_district(message: Message, state: FSMContext):
+async def process_district(message: Message):
     chem_name = message.text
     with open('search.txt', 'r', encoding='utf-8') as file:
         distr = file.read()
@@ -67,6 +61,7 @@ async def process_district(message: Message, state: FSMContext):
 
 
 @router.callback_query(F.data == "pills_for")
+@flags.chat_action("typing")
 async def input_text_prompt(clbck: CallbackQuery, state: FSMContext):
     await state.set_state(Gen.pills_for)
     await clbck.message.answer(text.pills)
