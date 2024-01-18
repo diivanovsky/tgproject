@@ -22,7 +22,10 @@ def search_and_parse(query, city):
                         tag = tags.find('div', class_='tooltip-info-header')
                         text = tags.span.get_text()
                         text = text.strip()
-                        file.write(text + '\n')
+                        index_comma = text.find(',')
+                        if index_comma != -1:
+                            file.write('\n' + text[index_comma + 2:] + '\n')
+
             with open('result.txt', 'r', encoding='utf-8') as file:
                 result = file.read()
                 return result
